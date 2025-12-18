@@ -47,25 +47,9 @@ RequestData.prototype.init = function(option, callback){
     }
     options = _options;
     
-    // 检查网络状态，决定是否使用mock数据
-    checkNetworkStatus().then((hasNetwork) => {
-        if (hasNetwork) {
-            // 有网络时使用真实接口
-            this._requestD(runjonit(options), function(res){
-                if(res.data && res.data.results){
-                    _self._handleData(res.data.results, callback)
-                } else {
-                    // 接口返回异常时使用mock数据
-                    console.log('接口返回异常，使用mock数据');
-                    _self._handleMockData(options, callback);
-                }
-            })
-        } else {
-            // 无网络时使用mock数据
-            console.log('无网络连接，使用mock数据');
-            _self._handleMockData(options, callback);
-        }
-    });
+    // 直接使用mock数据，不调用真实接口
+    console.log('使用mock数据展示');
+    _self._handleMockData(options, callback);
 }
 
 RequestData.prototype._handleData = function(data, callback){
