@@ -18,18 +18,18 @@
       "list":[{
         "pagePath" : "pages/index/index",
         "text" : "Gank",
-        "iconPath" : "img/high.ico",
-        "selectedIconPath" : "img/high.ico"
+        "iconPath" : "img/logo.png",
+        "selectedIconPath" : "img/logo.png"
       },{
         "pagePath" : "pages/add/add",
         "text" : "add",
-        "iconPath" : "img/high.ico",
-        "selectedIconPath" : "img/high.ico"
+        "iconPath" : "img/add.png",
+        "selectedIconPath" : "img/add.png"
       },{
         "pagePath" : "pages/about/about",
         "text" : "about",
-        "iconPath" : "img/high.ico",
-        "selectedIconPath" : "img/high.ico"
+        "iconPath" : "img/menu.png",
+        "selectedIconPath" : "img/menu.png"
       }]
     },
     "networkTimeout": {
