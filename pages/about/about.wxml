@@ -5,4 +5,12 @@
     感谢http://gank.io/提供的api
     githut:https://github.com/chenjinxinlove/Gank
   </text>
+
+  <view class="collection-entry" bindtap="goToCollection">
+    <view class="collection-title">
+      <text>我的收藏</text>
+      <icon type="arrowright" size="16" color="#ccc"/>
+    </view>
+    <view class="collection-count">共 {{collectionCount}} 条收藏</view>
+  </view>
 </view>
