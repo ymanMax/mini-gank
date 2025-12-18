@@ -1,0 +1,8 @@
+<view >
+
+  <image src="../../img/logo.png" class="about-logo"></image>
+  <text class="about-text">
+    感谢http://gank.io/提供的api
+    githut:https://github.com/chenjinxinlove/Gank
+  </text>
+</view>
