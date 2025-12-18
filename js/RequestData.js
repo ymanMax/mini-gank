@@ -1,5 +1,5 @@
 var options = "";
-var rootUrl = 'http://gank.io/api/';
+var rootUrl = 'http://111.229.213.248:7002/api/';
 var MockData = require('./MockData.js');
 
 var jonit = {
