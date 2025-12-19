@@ -4,7 +4,7 @@
     position: fixed;
     width: 100%;
     height: 2rem;
-    border-bottom:1px solid #ccc; 
+    border-bottom:1px solid #ccc;
     display: flex;
     flex-direction: row;
     line-height: 2rem;
@@ -25,7 +25,7 @@
 }
 .gank-seach {
      width: 60%;
-     line-height: 1rem; 
+     line-height: 1rem;
      padding-left: 2rem;
 }
 .gank-seach input {
@@ -37,6 +37,7 @@
 .seach-icon {
     padding: 0.6rem 0.5rem 0 0.5rem;
 }
+
 
 
 /*//弹出菜单*/
@@ -121,4 +122,129 @@
     position: relative;
     z-index: auto;
     color: aqua;
+}
+
+/* 轮播图样式 */
+.banner-section {
+    margin: 10rpx 0;
+}
+.banner-swiper {
+    width: 100%;
+    height: 300rpx;
+}
+.banner-image {
+    width: 100%;
+    height: 300rpx;
+}
+.banner-title {
+    position: absolute;
+    bottom: 20rpx;
+    left: 30rpx;
+    color: white;
+    font-size: 28rpx;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* 标签页样式 */
+.tab-tabs {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eee;
+    margin: 20rpx 0;
+}
+.tab-tab {
+    flex: 1;
+    text-align: center;
+    padding: 20rpx 0;
+    color: #666;
+    font-size: 28rpx;
+    border-bottom: 2px solid transparent;
+}
+.tab-tab.active {
+    color: #007AFF;
+    border-bottom-color: #007AFF;
+}
+
+/* 板块样式 */
+.section {
+    margin: 30rpx 0;
+}
+.section-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+    margin: 20rpx 30rpx;
+    padding-bottom: 10rpx;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* 内容评分样式 */
+.content-rating {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10rpx;
+}
+.rating-star {
+    color: #FFD700;
+    font-size: 24rpx;
+}
+.rating-count {
+    color: #999;
+    font-size: 22rpx;
+    margin-left: 5rpx;
+}
+.rating-stars {
+    display: inline-flex;
+    margin-left: 20rpx;
+}
+.rating-stars .star {
+    color: #ddd;
+    font-size: 24rpx;
+    margin-right: 5rpx;
+}
+.rating-stars .star.active {
+    color: #FFD700;
+}
+
+/* 内容统计信息 */
+.content-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10rpx;
+    font-size: 22rpx;
+    color: #666;
+}
+
+/* 内容操作区域 */
+.content-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10rpx;
+}
+
+/* 分类管理样式 */
+.category-group {
+    margin: 20rpx 0;
+}
+.category-group-title {
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #333;
+    margin: 15rpx 30rpx;
+}
+.category-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 20rpx;
+}
+.category-item {
+    background-color: #f0f0f0;
+    border-radius: 20rpx;
+    padding: 10rpx 20rpx;
+    margin: 8rpx;
+    font-size: 24rpx;
+    color: #666;
 }
