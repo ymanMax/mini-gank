@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init -y)",
+      "Bash(npm install -g @vue/cli-service-global --no-fund)",
+      "Bash(where:*)"
+    ]
+  }
+}

@@ -185,6 +185,189 @@ class MockData {
     };
   }
 
+  // 生成表情符号数据
+  generateEmojis() {
+    const emojis = [
+      { code: '[微笑]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-1.222e0a.png' },
+      { code: '[撇嘴]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-2.406bc0.png' },
+      { code: '[色]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-3.30b94c.png' },
+      { code: '[发呆]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-4.5a4566.png' },
+      { code: '[得意]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-5.77284b.png' },
+      { code: '[流泪]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-6.6385f7.png' },
+      { code: '[害羞]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-7.8d2467.png' },
+      { code: '[闭嘴]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-8.946195.png' },
+      { code: '[睡]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-9.a93434.png' },
+      { code: '[大哭]', url: 'https://res.wx.qq.com/wxdoc/dist/assets/img/emoji-10.1d6f6d.png' }
+    ];
+    return emojis;
+  }
+
+  // 生成单个评论
+  generateComment(contentId, parentId = null, index = 0) {
+    const isReply = parentId !== null;
+    return {
+      _id: `comment_${Date.now()}_${index}`,
+      contentId: contentId,
+      parentId: parentId,
+      content: isReply ? `回复：这个内容真不错！(模拟评论${index + 1})` : `这个内容真不错！(模拟评论${index + 1})`,
+      user: {
+        id: `user_${generateRandomString(6)}`,
+        name: `用户${generateRandomString(6)}`,
+        avatar: `https://picsum.photos/100/100?random=${Math.floor(Math.random() * 100)}`
+      },
+      likes: Math.floor(Math.random() * 50),
+      replies: Math.floor(Math.random() * 20),
+      createdAt: generateRandomDate(),
+      status: Math.random() > 0.1 ? 'approved' : 'pending', // 90% 已审核，10% 待审核
+      images: Math.random() > 0.7 ? [generateImageUrl()] : [] // 30% 评论包含图片
+    };
+  }
+
+  // 生成内容的评论列表
+  generateComments(contentId, options = {}) {
+    const {
+      num = 10,
+      page = 1,
+      includeReplies = true
+    } = options;
+
+    const cacheKey = `comments_${contentId}_${num}_${page}_${includeReplies}`;
+
+    if (this.mockDataCache[cacheKey]) {
+      return this.mockDataCache[cacheKey];
+    }
+
+    const results = [];
+    const startIndex = (page - 1) * num;
+
+    for (let i = 0; i < num; i++) {
+      // 生成主评论
+      const mainComment = this.generateComment(contentId, null, startIndex + i);
+      results.push(mainComment);
+
+      // 如果包含回复，为每个主评论生成一些回复
+      if (includeReplies && Math.random() > 0.3) {
+        const replyCount = Math.floor(Math.random() * 3) + 1;
+        for (let j = 0; j < replyCount; j++) {
+          const reply = this.generateComment(contentId, mainComment._id, `${startIndex + i}_${j}`);
+          results.push(reply);
+        }
+      }
+    }
+
+    this.mockDataCache[cacheKey] = results;
+    return results;
+  }
+
+  // 生成用户的评论记录
+  generateUserComments(userId, options = {}) {
+    const {
+      num = 10,
+      page = 1
+    } = options;
+
+    const results = [];
+    const startIndex = (page - 1) * num;
+
+    for (let i = 0; i < num; i++) {
+      const contentId = `mock_content_${Math.floor(Math.random() * 100)}`;
+      const comment = this.generateComment(contentId, null, startIndex + i);
+      comment.user.id = userId;
+      comment.user.name = `用户${userId.slice(-6)}`;
+      results.push(comment);
+    }
+
+    return results;
+  }
+
+  // 生成用户收到的回复
+  generateUserReplies(userId, options = {}) {
+    const {
+      num = 10,
+      page = 1
+    } = options;
+
+    const results = [];
+    const startIndex = (page - 1) * num;
+
+    for (let i = 0; i < num; i++) {
+      const contentId = `mock_content_${Math.floor(Math.random() * 100)}`;
+      const parentId = `comment_${Date.now()}_${startIndex + i}`;
+      const reply = this.generateComment(contentId, parentId, startIndex + i);
+      reply.parentUser = {
+        id: userId,
+        name: `用户${userId.slice(-6)}`
+      };
+      results.push(reply);
+    }
+
+    return results;
+  }
+
+  // 模拟发表评论
+  submitComment(data) {
+    const comment = {
+      _id: `comment_${Date.now()}`,
+      contentId: data.contentId,
+      parentId: data.parentId || null,
+      content: data.content,
+      user: data.user,
+      likes: 0,
+      replies: 0,
+      createdAt: new Date().toISOString().split('T')[0],
+      status: Math.random() > 0.2 ? 'approved' : 'pending', // 80% 直接通过，20% 待审核
+      images: data.images || []
+    };
+
+    return {
+      error: false,
+      msg: '评论发表成功！(模拟数据)',
+      data: comment
+    };
+  }
+
+  // 模拟点赞功能
+  toggleLike(type, id, userId) {
+    const isLiked = Math.random() > 0.5;
+    const likeCount = Math.floor(Math.random() * 100);
+
+    return {
+      error: false,
+      msg: `${isLiked ? '点赞' : '取消点赞'}成功！(模拟数据)`,
+      data: {
+        id: id,
+        type: type,
+        isLiked: isLiked,
+        likeCount: likeCount
+      }
+    };
+  }
+
+  // 模拟图片上传
+  uploadImage(filePath) {
+    return {
+      error: false,
+      msg: '图片上传成功！(模拟数据)',
+      data: {
+        url: generateImageUrl(),
+        width: 400,
+        height: 300,
+        size: Math.floor(Math.random() * 1024 * 1024) + 1024 // 1KB - 1MB
+      }
+    };
+  }
+
+  // 模拟获取内容的点赞数
+  getContentLikes(contentId) {
+    return {
+      error: false,
+      data: {
+        likeCount: Math.floor(Math.random() * 200),
+        isLiked: Math.random() > 0.5
+      }
+    };
+  }
+
   // 清空缓存
   clearCache() {
     this.mockDataCache = {};

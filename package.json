@@ -1,0 +1,20 @@
+{
+  "name": "mini-gank",
+  "version": "1.0.0",
+  "description": "基于Gank.io开放API开发的微信小程序，提供干货内容浏览、搜索、添加等功能，界面简洁易用。",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ymanMax/mini-gank.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ymanMax/mini-gank/issues"
+  },
+  "homepage": "https://github.com/ymanMax/mini-gank#readme"
+}

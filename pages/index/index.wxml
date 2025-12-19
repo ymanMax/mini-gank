@@ -32,19 +32,97 @@
         <icon class="seach-icon" type="search" color="#ccc" size="18" bindtap="search"/>
     </view>
     <view class="heightem"></view>
-    <view wx:for="{{GankDatas}}" class="gank-content">
+    <view wx:for="{{GankDatas}}" class="gank-content" wx:key="_id">
         <view wx:if="{{item.type == 'img'}}">
             <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
                 <image class="haveImage" src="{{item.url}}" mode="aspectFill"   ></image>
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+            </view>
         </view>
         <view wx:else>
             <view class="gank-html" data-src="{{item.url}}" bindtap="details">
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
-        </view>      
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+            </view>
+        </view>
+        <!-- 内容操作按钮 -->
+        <view class="content-actions">
+            <view class="action-btn" bindtap="likeContent" data-content-id="{{item._id}}">
+                <icon type="{{likes[item._id] && likes[item._id].isLiked ? 'success' : 'circle'}}" size="18" color="#ff6b6b"/>
+                <text>{{likes[item._id] ? likes[item._id].likeCount : 0}}</text>
+            </view>
+            <view class="action-btn" bindtap="showComments" data-content-id="{{item._id}}">
+                <icon type="comment" size="18" color="#4ecdc4"/>
+                <text>评论</text>
+            </view>
+        </view>
+
+        <!-- 评论列表 -->
+        <view class="comments-section" wx:if="{{showingComments.length > 0 && currentContentId == item._id}}">
+            <view class="comments-list">
+                <view wx:for="{{showingComments}}" wx:for-item="comment" wx:key="_id" class="comment-item {{comment.parentId ? 'reply' : ''}}">
+                    <image class="comment-avatar" src="{{comment.user.avatar}}" mode="aspectFill"></image>
+                    <view class="comment-content">
+                        <view class="comment-header">
+                            <text class="comment-author">{{comment.user.name}}</text>
+                            <text class="comment-time">{{comment.createdAt}}</text>
+                        </view>
+                        <view class="comment-text">{{comment.content}}</view>
+                        <view class="comment-images" wx:if="{{comment.images.length > 0}}">
+                            <image wx:for="{{comment.images}}" wx:key="index" src="{{item}}" mode="aspectFill" class="comment-image"></image>
+                        </view>
+                        <view class="comment-actions">
+                            <view class="comment-action-btn" bindtap="likeComment" data-comment-id="{{comment._id}}">
+                                <icon type="thumbup" size="14" color="#999"/>
+                                <text>{{comment.likes}}</text>
+                            </view>
+                            <view class="comment-action-btn" bindtap="replyToComment" data-comment-id="{{comment._id}}">
+                                <icon type="message" size="14" color="#999"/>
+                                <text>回复</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
     </view><!--gank-content-->
+
+    <!-- 评论输入框 -->
+    <view class="comment-input-section" wx:if="{{showCommentInput}}">
+        <view class="comment-input-toolbar">
+            <view class="comment-input-container">
+                <input class="comment-input" placeholder="{{currentParentId ? '回复评论...' : '发表评论...'}}" value="{{commentContent}}" bindinput="onCommentInput" />
+                <view class="comment-input-actions">
+                    <view class="comment-action-icon" bindtap="showEmojiPicker">
+                        <icon type="smile" size="20" color="#666"/>
+                    </view>
+                    <view class="comment-action-icon" bindtap="chooseCommentImage">
+                        <icon type="album" size="20" color="#666"/>
+                    </view>
+                    <view class="comment-submit-btn" bindtap="submitComment">发送</view>
+                </view>
+            </view>
+
+            <!-- 评论图片预览 -->
+            <view class="comment-images-preview" wx:if="{{commentImages.length > 0}}">
+                <view wx:for="{{commentImages}}" wx:key="index" class="comment-image-preview">
+                    <image src="{{item}}" mode="aspectFill"></image>
+                    <view class="comment-image-remove" bindtap="removeCommentImage" data-index="{{index}}">
+                        <icon type="clear" size="16" color="#fff"/>
+                    </view>
+                </view>
+            </view>
+
+            <!-- 表情选择器 -->
+            <view class="emoji-picker" wx:if="{{showEmojiPicker}}">
+                <view class="emoji-list">
+                    <view wx:for="{{emojis}}" wx:key="code" class="emoji-item" bindtap="selectEmoji" data-emoji-code="{{item.code}}">
+                        <image src="{{item.url}}" mode="aspectFill"></image>
+                    </view>
+                </view>
+                <view class="emoji-close" bindtap="hideEmojiPicker">关闭</view>
+            </view>
+        </view>
+    </view>
 </scroll-view><!--body-view-->
