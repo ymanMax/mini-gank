@@ -185,6 +185,72 @@ class MockData {
     };
   }
 
+  // 生成用户信息
+  generateUserInfo() {
+    return {
+      id: 'user_001',
+      nickname: '前端开发者',
+      avatar: 'https://picsum.photos/200/200?random=10',
+      bio: '热爱技术，喜欢分享前端开发知识',
+      joinDate: '2023-01-15',
+      followers: 128,
+      following: 36,
+      posts: 45
+    };
+  }
+
+  // 生成我的发布数据
+  generateMyPosts(options = {}) {
+    const { num = 8 } = options;
+    const posts = [];
+
+    for (let i = 0; i < num; i++) {
+      const type = mockTypes[Math.floor(Math.random() * mockTypes.length)];
+      posts.push({
+        id: `post_${Date.now()}_${i}`,
+        title: `${generateDescription(type)}`,
+        type: type,
+        url: Math.random() > 0.5 ? generateImageUrl() : generateArticleUrl(),
+        publishedAt: generateRandomDate(),
+        views: Math.floor(Math.random() * 1000),
+        likes: Math.floor(Math.random() * 100)
+      });
+    }
+
+    return posts;
+  }
+
+  // 生成浏览历史数据
+  generateBrowseHistory(options = {}) {
+    const { num = 10 } = options;
+    const history = [];
+
+    for (let i = 0; i < num; i++) {
+      const type = mockTypes[Math.floor(Math.random() * mockTypes.length)];
+      history.push({
+        id: `history_${Date.now()}_${i}`,
+        title: `${generateDescription(type)}`,
+        type: type,
+        url: Math.random() > 0.5 ? generateImageUrl() : generateArticleUrl(),
+        viewedAt: generateRandomDate(),
+        duration: `${Math.floor(Math.random() * 60)}分钟`
+      });
+    }
+
+    return history;
+  }
+
+  // 生成设置选项数据
+  generateSettings() {
+    return {
+      theme: 'light',
+      notifications: true,
+      autoRefresh: false,
+      cacheSize: '25.6MB',
+      version: '1.0.0'
+    };
+  }
+
   // 清空缓存
   clearCache() {
     this.mockDataCache = {};
