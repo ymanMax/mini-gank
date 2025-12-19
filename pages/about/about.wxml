@@ -1,8 +1,100 @@
-<view >
+<view class="personal-center">
+  <!-- 用户信息头部 -->
+  <view class="user-info-header">
+    <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+    <view class="user-info">
+      <text class="user-nickname">{{userInfo.nickName || '匿名用户'}}</text>
+      <text class="user-id">ID: {{userInfo.openId || 'user_default'}}</text>
+    </view>
+  </view>
 
-  <image src="../../img/logo.png" class="about-logo"></image>
-  <text class="about-text">
-    感谢http://gank.io/提供的api
-    githut:https://github.com/chenjinxinlove/Gank
-  </text>
+  <!-- 标签切换 -->
+  <view class="tab-container">
+    <view class="tab-item {{activeTab === 'myComments' ? 'active' : ''}}" bindtap="switchTab" data-tab="myComments">
+      <text>我的评论</text>
+      <view class="tab-badge">{{myComments.length}}</view>
+    </view>
+    <view class="tab-item {{activeTab === 'replies' ? 'active' : ''}}" bindtap="switchTab" data-tab="replies">
+      <text>收到的回复</text>
+      <view class="tab-badge">{{replies.length}}</view>
+    </view>
+  </view>
+
+  <!-- 我的评论列表 -->
+  <view class="comments-list" wx:if="{{activeTab === 'myComments'}}">
+    <view wx:if="{{myComments.length === 0}}">
+      <view class="empty-state">
+        <image src="../../img/empty.png" class="empty-icon" mode="aspectFill"></image>
+        <text class="empty-text">您还没有发表过评论</text>
+      </view>
+    </view>
+    <view wx:else>
+      <view wx:for="{{myComments}}" wx:key="_id" class="comment-item">
+        <image class="comment-avatar" src="{{item.user.avatar}}" mode="aspectFill"></image>
+        <view class="comment-content">
+          <view class="comment-header">
+            <text class="comment-author">{{item.user.name}}</text>
+            <text class="comment-time">{{item.createdAt}}</text>
+          </view>
+          <view class="comment-text">{{item.content}}</view>
+          <view class="comment-images" wx:if="{{item.images.length > 0}}">
+            <image wx:for="{{item.images}}" wx:key="index" src="{{item}}" mode="aspectFill" class="comment-image"></image>
+          </view>
+          <view class="comment-actions">
+            <view class="comment-action-btn" bindtap="likeComment" data-comment-id="{{item._id}}">
+              <icon type="thumbup" size="14" color="#999"/>
+              <text>{{item.likes}}</text>
+            </view>
+            <view class="comment-action-btn" bindtap="replyToComment" data-comment-id="{{item._id}}">
+              <icon type="message" size="14" color="#999"/>
+              <text>回复</text>
+            </view>
+          </view>
+          <view class="comment-status" wx:if="{{item.status === 'pending'}}">
+            <text class="status-text">审核中</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <loading wx:if="{{loading.myComments}}" hidden="{{!loading.myComments}}">加载中...</loading>
+  </view>
+
+  <!-- 收到的回复列表 -->
+  <view class="replies-list" wx:if="{{activeTab === 'replies'}}">
+    <view wx:if="{{replies.length === 0}}">
+      <view class="empty-state">
+        <image src="../../img/empty.png" class="empty-icon" mode="aspectFill"></image>
+        <text class="empty-text">您还没有收到过回复</text>
+      </view>
+    </view>
+    <view wx:else>
+      <view wx:for="{{replies}}" wx:key="_id" class="reply-item">
+        <image class="reply-avatar" src="{{item.user.avatar}}" mode="aspectFill"></image>
+        <view class="reply-content">
+          <view class="reply-header">
+            <text class="reply-author">{{item.user.name}}</text>
+            <text class="reply-time">{{item.createdAt}}</text>
+          </view>
+          <view class="reply-to" wx:if="{{item.parentUser}}">
+            <text class="reply-to-text">回复  {{item.parentUser.name}}:</text>
+          </view>
+          <view class="reply-text">{{item.content}}</view>
+          <view class="reply-images" wx:if="{{item.images.length > 0}}">
+            <image wx:for="{{item.images}}" wx:key="index" src="{{item}}" mode="aspectFill" class="reply-image"></image>
+          </view>
+          <view class="reply-actions">
+            <view class="reply-action-btn" bindtap="likeComment" data-comment-id="{{item._id}}">
+              <icon type="thumbup" size="14" color="#999"/>
+              <text>{{item.likes}}</text>
+            </view>
+            <view class="reply-action-btn" bindtap="replyToComment" data-comment-id="{{item._id}}">
+              <icon type="message" size="14" color="#999"/>
+              <text>回复</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <loading wx:if="{{loading.replies}}" hidden="{{!loading.replies}}">加载中...</loading>
+  </view>
 </view>
