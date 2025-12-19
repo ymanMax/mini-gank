@@ -31,20 +31,182 @@
         </view>
         <icon class="seach-icon" type="search" color="#ccc" size="18" bindtap="search"/>
     </view>
-    <view class="heightem"></view>
-    <view wx:for="{{GankDatas}}" class="gank-content">
-        <view wx:if="{{item.type == 'img'}}">
-            <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
-                <image class="haveImage" src="{{item.url}}" mode="aspectFill"   ></image>
-                <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
+
+    <!-- 轮播图 -->
+    <view class="banner-section">
+        <swiper class="banner-swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+            <swiper-item wx:for="{{bannerData}}" wx:key="id">
+                <image src="{{item.imageUrl}}" class="banner-image" mode="aspectFill" bindtap="details" data-src="{{item.url}}"/>
+                <view class="banner-title">{{item.title}}</view>
+            </swiper-item>
+        </swiper>
+    </view>
+
+    <!-- 标签页切换 -->
+    <view class="tab-tabs">
+        <view class="tab-tab {{currentTab == 'recommend' ? 'active' : ''}}" bindtap="switchTab" data-tab="recommend">
+            推荐
         </view>
-        <view wx:else>
-            <view class="gank-html" data-src="{{item.url}}" bindtap="details">
-                <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
-        </view>      
-    </view><!--gank-content-->
-</scroll-view><!--body-view-->
+        <view class="tab-tab {{currentTab == 'hot' ? 'active' : ''}}" bindtap="switchTab" data-tab="hot">
+            热门内容
+        </view>
+        <view class="tab-tab {{currentTab == 'latest' ? 'active' : ''}}" bindtap="switchTab" data-tab="latest">
+            最新内容
+        </view>
+    </view>
+
+    <!-- 推荐标签页 -->
+    <view wx:if="{{currentTab == 'recommend'}}">
+        <!-- 编辑推荐 -->
+        <view class="section">
+            <view class="section-title">编辑推荐</view>
+            <view wx:for="{{editorRecommendations}}" class="gank-content">
+                <view wx:if="{{item.type == 'img'}}">
+                    <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
+                        <image class="haveImage" src="{{item.url}}" mode="aspectFill"></image>
+                        <view class="haveDesc">{{item.desc}}</view>
+                        <view class="havePublishedAt">{{item.publishedAt}}</view>
+                        <view class="content-rating">
+                            <text class="rating-star">★</text>
+                            <text>{{item.rating}}</text>
+                            <text class="rating-count">({{item.ratingCount}})</text>
+                        </view>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="gank-html" data-src="{{item.url}}" bindtap="details">
+                        <view class="haveDesc">{{item.desc}}</view>
+                        <view class="havePublishedAt">{{item.publishedAt}}</view>
+                        <view class="content-rating">
+                            <text class="rating-star">★</text>
+                            <text>{{item.rating}}</text>
+                            <text class="rating-count">({{item.ratingCount}})</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 个性化推荐 -->
+        <view class="section">
+            <view class="section-title">个性化推荐</view>
+            <view wx:for="{{personalRecommendations}}" class="gank-content">
+                <view wx:if="{{item.type == 'img'}}">
+                    <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
+                        <image class="haveImage" src="{{item.url}}" mode="aspectFill"></image>
+                        <view class="haveDesc">{{item.desc}}</view>
+                        <view class="havePublishedAt">{{item.publishedAt}}</view>
+                        <view class="content-actions">
+                            <view class="content-rating">
+                                <text class="rating-star">★</text>
+                                <text>{{item.rating}}</text>
+                            </view>
+                            <view class="rating-stars">
+                                <text wx:for="{{5}}" wx:key="index" class="star {{index < item.rating ? 'active' : ''}}"
+                                      bindtap="rateContent" data-itemid="{{item._id}}" data-rating="{{index + 1}}">★</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="gank-html" data-src="{{item.url}}" bindtap="details">
+                        <view class="haveDesc">{{item.desc}}</view>
+                        <view class="havePublishedAt">{{item.publishedAt}}</view>
+                        <view class="content-actions">
+                            <view class="content-rating">
+                                <text class="rating-star">★</text>
+                                <text>{{item.rating}}</text>
+                            </view>
+                            <view class="rating-stars">
+                                <text wx:for="{{5}}" wx:key="index" class="star {{index < item.rating ? 'active' : ''}}"
+                                      bindtap="rateContent" data-itemid="{{item._id}}" data-rating="{{index + 1}}">★</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 热门内容标签页 -->
+    <view wx:if="{{currentTab == 'hot'}}">
+        <view wx:for="{{hotContent}}" class="gank-content">
+            <view wx:if="{{item.type == 'img'}}">
+                <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
+                    <image class="haveImage" src="{{item.url}}" mode="aspectFill"></image>
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                    <view class="content-stats">
+                        <text>浏览:{{item.views}}</text>
+                        <text>收藏:{{item.likes}}</text>
+                        <text class="content-rating">★{{item.rating}}({{item.ratingCount}})</text>
+                    </view>
+                </view>
+            </view>
+            <view wx:else>
+                <view class="gank-html" data-src="{{item.url}}" bindtap="details">
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                    <view class="content-stats">
+                        <text>浏览:{{item.views}}</text>
+                        <text>收藏:{{item.likes}}</text>
+                        <text class="content-rating">★{{item.rating}}({{item.ratingCount}})</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 最新内容标签页 -->
+    <view wx:if="{{currentTab == 'latest'}}">
+        <view wx:for="{{latestContent}}" class="gank-content">
+            <view wx:if="{{item.type == 'img'}}">
+                <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
+                    <image class="haveImage" src="{{item.url}}" mode="aspectFill"></image>
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                </view>
+            </view>
+            <view wx:else>
+                <view class="gank-html" data-src="{{item.url}}" bindtap="details">
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 分类管理 -->
+    <view class="section">
+        <view class="section-title">内容分类</view>
+        <view wx:for="{{categoryTree}}" class="category-group">
+            <view class="category-group-title">{{item.name}}</view>
+            <view class="category-items">
+                <view wx:for="{{item.children}}" wx:for-item="child" wx:key="id" class="category-item" bindtap="selectCategory" data-type="{{child.type}}">
+                    {{child.name}}
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 传统分类内容 -->
+    <view class="section">
+        <view class="section-title">分类内容</view>
+        <view wx:for="{{GankDatas}}" class="gank-content">
+            <view wx:if="{{item.type == 'img'}}">
+                <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
+                    <image class="haveImage" src="{{item.url}}" mode="aspectFill"></image>
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                </view>
+            </view>
+            <view wx:else>
+                <view class="gank-html" data-src="{{item.url}}" bindtap="details">
+                    <view class="haveDesc">{{item.desc}}</view>
+                    <view class="havePublishedAt">{{item.publishedAt}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+</scroll-view>
