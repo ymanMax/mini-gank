@@ -122,3 +122,15 @@
     z-index: auto;
     color: aqua;
 }
+
+/* 举报按钮 */
+.report-btn {
+    position: absolute;
+    right: 10rpx;
+    top: 10rpx;
+    background-color: #ff4d4f !important;
+    color: white !important;
+    font-size: 20rpx !important;
+    padding: 8rpx 16rpx !important;
+    min-width: auto !important;
+}

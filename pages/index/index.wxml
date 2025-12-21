@@ -32,19 +32,21 @@
         <icon class="seach-icon" type="search" color="#ccc" size="18" bindtap="search"/>
     </view>
     <view class="heightem"></view>
-    <view wx:for="{{GankDatas}}" class="gank-content">
+    <view wx:for="{{GankDatas}}" wx:key="_id" class="gank-content">
         <view wx:if="{{item.type == 'img'}}">
             <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
                 <image class="haveImage" src="{{item.url}}" mode="aspectFill"   ></image>
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+            </view>
+            <button class="report-btn" size="mini" bindtap="reportContent" data-item="{{item}}">举报</button>
         </view>
         <view wx:else>
             <view class="gank-html" data-src="{{item.url}}" bindtap="details">
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
-        </view>      
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+            </view>
+            <button class="report-btn" size="mini" bindtap="reportContent" data-item="{{item}}">举报</button>
+        </view>
     </view><!--gank-content-->
 </scroll-view><!--body-view-->

@@ -185,6 +185,74 @@ class MockData {
     };
   }
 
+  // 生成用户统计数据
+  generateUserStats() {
+    return {
+      publishCount: Math.floor(Math.random() * 50) + 5,
+      favoriteCount: Math.floor(Math.random() * 100) + 10,
+      commentCount: Math.floor(Math.random() * 80) + 15,
+      likeCount: Math.floor(Math.random() * 200) + 20,
+      activeDays: Math.floor(Math.random() * 30) + 5,
+      recentActivity: generateRandomDate()
+    };
+  }
+
+  // 生成内容举报数据
+  generateReports() {
+    const reports = [];
+    const reportReasons = ['色情低俗', '政治敏感', '广告推广', '恶意攻击', '其他'];
+
+    for (let i = 0; i < 8; i++) {
+      reports.push({
+        id: `report_${Date.now()}_${i}`,
+        contentId: `mock_${Date.now()}_${i}`,
+        contentTitle: `违规内容标题 ${i+1}`,
+        reporter: `user_${generateRandomString(6)}`,
+        reason: reportReasons[Math.floor(Math.random() * reportReasons.length)],
+        reportTime: generateRandomDate(),
+        status: i % 3 === 0 ? '待处理' : i % 3 === 1 ? '已处理' : '已删除',
+        type: mockTypes[Math.floor(Math.random() * mockTypes.length)]
+      });
+    }
+
+    return reports;
+  }
+
+  // 生成后台管理统计数据
+  generateAdminStats() {
+    return {
+      totalUsers: Math.floor(Math.random() * 500) + 200,
+      totalContents: Math.floor(Math.random() * 2000) + 500,
+      pendingReviews: Math.floor(Math.random() * 30) + 5,
+      todayPublish: Math.floor(Math.random() * 50) + 10,
+      contentHeat: [
+        { type: 'Android', count: 120, trend: '+12%' },
+        { type: 'iOS', count: 95, trend: '+8%' },
+        { type: '前端', count: 150, trend: '+20%' },
+        { type: '福利', count: 80, trend: '+5%' },
+        { type: '休息视频', count: 65, trend: '+3%' }
+      ]
+    };
+  }
+
+  // 生成待审核内容
+  generatePendingContents() {
+    const contents = [];
+
+    for (let i = 0; i < 10; i++) {
+      contents.push({
+        id: `pending_${Date.now()}_${i}`,
+        title: `待审核内容 ${i+1}`,
+        type: mockTypes[Math.floor(Math.random() * mockTypes.length)],
+        author: `user_${generateRandomString(6)}`,
+        publishTime: generateRandomDate(),
+        status: '待审核'
+      });
+    }
+
+    return contents;
+  }
+
   // 清空缓存
   clearCache() {
     this.mockDataCache = {};

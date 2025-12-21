@@ -1,8 +1,19 @@
-<view >
-
+<view class="about-container">
   <image src="../../img/logo.png" class="about-logo"></image>
   <text class="about-text">
     感谢http://gank.io/提供的api
     githut:https://github.com/chenjinxinlove/Gank
   </text>
+
+  <!-- 功能入口列表 -->
+  <view class="func-list">
+    <view class="func-item" bindtap="goToStats">
+      <text class="func-item-text">📊 数据统计</text>
+      <text class="func-item-arrow">></text>
+    </view>
+    <view class="func-item" bindtap="goToAdmin">
+      <text class="func-item-text">⚙️ 后台管理</text>
+      <text class="func-item-arrow">></text>
+    </view>
+  </view>
 </view>
