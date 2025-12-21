@@ -1,0 +1,223 @@
+.admin-container {
+  padding: 30rpx;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.admin-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 标签页 */
+.tab-bar {
+  display: flex;
+  background: white;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 3rpx solid transparent;
+}
+
+.tab-item.active {
+  color: #007aff;
+  border-bottom-color: #007aff;
+}
+
+.tab-content {
+  background: white;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+/* 数据概览 */
+.stats-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.summary-item {
+  flex: 1;
+  min-width: 150rpx;
+  text-align: center;
+}
+
+.summary-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #007aff;
+  margin-bottom: 10rpx;
+}
+
+.summary-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 内容热度 */
+.content-heat {
+  margin-top: 30rpx;
+}
+
+.heat-list {
+  margin-top: 20rpx;
+}
+
+.heat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.heat-type {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.heat-count {
+  font-size: 28rpx;
+  color: #007aff;
+}
+
+.heat-trend {
+  font-size: 24rpx;
+  color: #07c160;
+}
+
+/* 内容列表 */
+.content-list {
+  margin-top: 20rpx;
+}
+
+.content-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.content-info {
+  flex: 1;
+}
+
+.content-title {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.content-meta {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.content-type {
+  margin-right: 20rpx;
+}
+
+.content-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+/* 举报列表 */
+.report-list {
+  margin-top: 20rpx;
+}
+
+.report-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.report-info {
+  flex: 1;
+}
+
+.report-title {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.report-meta {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.report-reason {
+  margin-right: 20rpx;
+}
+
+.report-status {
+  margin-left: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 10rpx;
+  font-size: 20rpx;
+}
+/* 
+.report-status.status-待处理 {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.report-status.status-已处理 {
+  background-color: #07c160;
+  color: white;
+}
+
+.report-status.status-已删除 {
+  background-color: #ff4d4f;
+  color: white;
+} */
+
+.report-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+/* 按钮样式 */
+.btn-approve {
+  background-color: #07c160 !important;
+  color: white !important;
+}
+
+.btn-handle {
+  background-color: #007aff !important;
+  color: white !important;
+}
+
+.btn-delete {
+  background-color: #ff4d4f !important;
+  color: white !important;
+}

@@ -133,6 +133,23 @@ Page({
      wx.navigateTo({
        url:url
      })
+  },
+
+  // 举报内容
+  reportContent: function (event) {
+    const item = event.currentTarget.dataset.item;
+    wx.showModal({
+      title: '举报内容',
+      content: '确定要举报该内容吗？',
+      success: function (res) {
+        if (res.confirm) {
+          wx.showToast({
+            title: '举报成功',
+            icon: 'success'
+          });
+        }
+      }
+    });
   }
 
 });

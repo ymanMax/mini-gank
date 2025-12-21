@@ -2,5 +2,36 @@
     width: 10rem;
     height: 10rem;
     margin: 5rem ;
-    
+}
+
+.about-container {
+  padding: 40rpx 30rpx;
+}
+
+.about-text {
+  display: block;
+  text-align: center;
+  color: #666;
+  font-size: 28rpx;
+  line-height: 1.5;
+  margin-bottom: 60rpx;
+}
+
+.func-list {
+  border-top: 1rpx solid #eee;
+}
+
+.func-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #eee;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.func-item-arrow {
+  color: #999;
+  font-size: 28rpx;
 }

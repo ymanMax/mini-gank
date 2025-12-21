@@ -2,7 +2,9 @@
     "pages":[
       "pages/index/index",
       "pages/add/add",
-      "pages/about/about"
+      "pages/about/about",
+      "pages/stats/stats",
+      "pages/admin/index"
     ],
     "window":{
      "navigationBarBackgroundColor": "#292929",

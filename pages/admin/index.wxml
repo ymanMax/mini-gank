@@ -1,0 +1,94 @@
+<view class="admin-container">
+  <view class="admin-header">
+    <text class="admin-title">⚙️ 后台管理</text>
+  </view>
+
+  <!-- 标签页切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'overview' ? 'active' : ''}}" bindtap="switchTab" data-tab="overview">
+      数据概览
+    </view>
+    <view class="tab-item {{currentTab === 'review' ? 'active' : ''}}" bindtap="switchTab" data-tab="review">
+      内容审核
+    </view>
+    <view class="tab-item {{currentTab === 'reports' ? 'active' : ''}}" bindtap="switchTab" data-tab="reports">
+      举报管理
+    </view>
+  </view>
+
+  <!-- 数据概览 -->
+  <view wx:if="{{currentTab === 'overview'}}" class="tab-content">
+    <view class="stats-summary">
+      <view class="summary-item">
+        <view class="summary-value">{{adminStats.totalUsers || 0}}</view>
+        <view class="summary-label">总用户数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{adminStats.totalContents || 0}}</view>
+        <view class="summary-label">总内容数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{adminStats.pendingReviews || 0}}</view>
+        <view class="summary-label">待审核</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{adminStats.todayPublish || 0}}</view>
+        <view class="summary-label">今日发布</view>
+      </view>
+    </view>
+
+    <view class="content-heat">
+      <text class="section-title">内容热度统计</text>
+      <view class="heat-list">
+        <view class="heat-item" wx:for="{{adminStats.contentHeat || []}}" wx:key="type">
+          <view class="heat-type">{{item.type}}</view>
+          <view class="heat-count">{{item.count}}</view>
+          <view class="heat-trend">{{item.trend}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容审核 -->
+  <view wx:if="{{currentTab === 'review'}}" class="tab-content">
+    <view class="section-title">待审核内容</view>
+    <view class="content-list">
+      <view class="content-item" wx:for="{{pendingContents || []}}" wx:key="id">
+        <view class="content-info">
+          <view class="content-title">{{item.title}}</view>
+          <view class="content-meta">
+            <text class="content-type">{{item.type}}</text>
+            <text class="content-author">发布者: {{item.author}}</text>
+            <text class="content-time">{{item.publishTime}}</text>
+          </view>
+        </view>
+        <view class="content-actions">
+          <button class="btn-approve" size="mini" bindtap="handleContentReview" data-id="{{item.id}}">通过</button>
+          <button class="btn-delete" size="mini" bindtap="deletePendingContent" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 举报管理 -->
+  <view wx:if="{{currentTab === 'reports'}}" class="tab-content">
+    <view class="section-title">举报列表</view>
+    <view class="report-list">
+      <view class="report-item" wx:for="{{reports || []}}" wx:key="id">
+        <view class="report-info">
+          <view class="report-title">{{item.contentTitle}}</view>
+          <view class="report-meta">
+            <text class="report-reason">{{item.reason}}</text>
+            <text class="report-reporter">举报人: {{item.reporter}}</text>
+            <text class="report-time">{{item.reportTime}}</text>
+            <text class="report-status status-{{item.status}}">{{item.status}}</text>
+          </view>
+        </view>
+        <view class="report-actions">
+          <button class="btn-handle" size="mini" bindtap="handleReport" data-id="{{item.id}}">处理</button>
+          <button class="btn-delete" size="mini" bindtap="deleteReportedContent" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
