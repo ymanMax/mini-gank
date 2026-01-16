@@ -37,14 +37,24 @@
             <view class="haveImg" bindtap="onSavePic" data-imgSrc="{{item.url}}">
                 <image class="haveImage" src="{{item.url}}" mode="aspectFill"   ></image>
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+                <view class="collect-btn {{item.isCollected ? 'collected' : ''}}"
+                      bindtap="onCollect"
+                      data-item="{{item}}">
+                    <icon type="{{item.isCollected ? 'success' : 'star'}}" size="18" color="{{item.isCollected ? '#ff4444' : '#ccc'}}"/>
+                </view>
+            </view>
         </view>
         <view wx:else>
             <view class="gank-html" data-src="{{item.url}}" bindtap="details">
                 <view class="haveDesc">{{item.desc}}</view>
-                <view class="havePublishedAt">{{item.publishedAt}}</view>   
-            </view> 
-        </view>      
+                <view class="havePublishedAt">{{item.publishedAt}}</view>
+                <view class="collect-btn {{item.isCollected ? 'collected' : ''}}"
+                      bindtap="onCollect"
+                      data-item="{{item}}">
+                    <icon type="{{item.isCollected ? 'success' : 'star'}}" size="18" color="{{item.isCollected ? '#ff4444' : '#ccc'}}"/>
+                </view>
+            </view>
+        </view>
     </view><!--gank-content-->
 </scroll-view><!--body-view-->

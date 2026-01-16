@@ -185,6 +185,85 @@ class MockData {
     };
   }
 
+  // 模拟收藏数据管理
+  generateCollectionData(options = {}) {
+    const {
+      num = 5,
+      categories = []
+    } = options;
+
+    const results = [];
+    // 从已生成的数据中随机选择一些作为收藏数据
+    for (let i = 0; i < num; i++) {
+      const type = categories.length > 0 ? categories[Math.floor(Math.random() * categories.length)] : 'all';
+      const item = this.generateItem(type, i);
+      item.collectedAt = generateRandomDate(); // 添加收藏时间
+      results.push(item);
+    }
+
+    return results;
+  }
+
+  // 模拟添加收藏
+  addToCollection(item) {
+    return {
+      error: false,
+      msg: '收藏成功！(模拟数据)',
+      data: {
+        ...item,
+        collectedAt: new Date().toISOString().split('T')[0]
+      }
+    };
+  }
+
+  // 模拟取消收藏
+  removeFromCollection(itemId) {
+    return {
+      error: false,
+      msg: '取消收藏成功！(模拟数据)',
+      data: {
+        id: itemId,
+        removedAt: new Date().toISOString().split('T')[0]
+      }
+    };
+  }
+
+  // 模拟获取收藏列表
+  getCollectionList(options = {}) {
+    const {
+      page = 1,
+      num = 10,
+      category = '',
+      search = ''
+    } = options;
+
+    // 生成一些模拟收藏数据
+    const collectionData = this.generateCollectionData({
+      num: page * num,
+      categories: category ? [category] : []
+    });
+
+    // 模拟分页
+    const startIndex = (page - 1) * num;
+    let results = collectionData.slice(startIndex, startIndex + num);
+
+    // 模拟搜索
+    if (search) {
+      results = results.filter(item =>
+        item.desc.includes(search) ||
+        item.type.includes(search) ||
+        item.who.includes(search)
+      );
+    }
+
+    return {
+      error: false,
+      msg: '获取收藏列表成功！(模拟数据)',
+      data: results,
+      total: collectionData.length
+    };
+  }
+
   // 清空缓存
   clearCache() {
     this.mockDataCache = {};

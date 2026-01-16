@@ -1,0 +1,86 @@
+<view class="collection-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input type="text" placeholder="搜索收藏内容" placeholderStyle="color:#ccc;font-size:15px;"
+           value="{{searchKeyword}}" bindinput="onSearchInput"/>
+    <icon class="search-icon" type="search" color="#ccc" size="18" bindtap="onSearch"/>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="category-filter">
+    <scroll-view class="category-scroll" scroll-x="true">
+      <view class="category-item {{currentCategory === '' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="">
+        全部
+      </view>
+      <view class="category-item {{currentCategory === 'Android' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="Android">
+        Android
+      </view>
+      <view class="category-item {{currentCategory === 'iOS' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="iOS">
+        iOS
+      </view>
+      <view class="category-item {{currentCategory === '前端' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="前端">
+        前端
+      </view>
+      <view class="category-item {{currentCategory === '福利' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="福利">
+        福利
+      </view>
+      <view class="category-item {{currentCategory === '休息视频' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="休息视频">
+        休息视频
+      </view>
+      <view class="category-item {{currentCategory === '拓展资源' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="拓展资源">
+        拓展资源
+      </view>
+      <view class="category-item {{currentCategory === '瞎推荐' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="瞎推荐">
+        瞎推荐
+      </view>
+      <view class="category-item {{currentCategory === 'App' ? 'active' : ''}}"
+            bindtap="onCategoryChange" data-category="App">
+        App
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 收藏内容列表 -->
+  <scroll-view class="collection-list" scroll-y="true" style="height: {{listHeight}}px;"
+               bindscrolltolower="onLoadMore">
+    <loading hidden="{{loadingHidden}}" bindchange="loadingChange">
+      加载中...
+    </loading>
+
+    <view wx:if="{{collectionData.length === 0}}" class="empty-state">
+      <icon type="info_circle" size="48" color="#ccc"/>
+      <text class="empty-text">暂无收藏内容</text>
+    </view>
+
+    <view wx:for="{{collectionData}}" class="collection-item">
+      <view wx:if="{{item.type == 'img'}}">
+        <view class="item-img">
+          <image class="item-image" src="{{item.url}}" mode="aspectFill"></image>
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="item-desc">{{item.desc}}</view>
+        <view class="item-info">
+          <text class="item-time">收藏于 {{item.collectedAt}}</text>
+          <text class="item-type">{{item.type === 'img' ? '图片' : '文章'}}</text>
+        </view>
+      </view>
+      <view class="item-actions">
+        <view class="remove-btn" bindtap="onRemoveCollection" data-item="{{item}}">
+          <icon type="clear" size="20" color="#ff4444"/>
+        </view>
+        <view class="view-btn" bindtap="onViewDetail" data-url="{{item.url}}">
+          <icon type="right" size="20" color="#333"/>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

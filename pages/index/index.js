@@ -1,5 +1,6 @@
 var appInstance = getApp();
 var RequestData = require('../../js/RequestData.js') ;
+var MockData = require('../../js/MockData.js') ;
 var IMGSRC = '';
 
 Page({
@@ -126,6 +127,43 @@ Page({
         reda(this,'search',data)
     }
   },
+  // 收藏/取消收藏
+  onCollect: function(event) {
+    var item = event.currentTarget.dataset.item;
+    var GankDatas = this.data.GankDatas;
+
+    // 查找当前项的索引
+    var index = GankDatas.findIndex(function(gankItem) {
+      return gankItem._id === item._id;
+    });
+
+    if (index !== -1) {
+      var isCollected = !GankDatas[index].isCollected;
+      GankDatas[index].isCollected = isCollected;
+
+      this.setData({
+        GankDatas: GankDatas
+      });
+
+      // 调用mock数据接口
+      if (isCollected) {
+        var result = MockData.addToCollection(item);
+        wx.showToast({
+          title: result.msg,
+          icon: 'success',
+          duration: 1500
+        });
+      } else {
+        var result = MockData.removeFromCollection(item._id);
+        wx.showToast({
+          title: result.msg,
+          icon: 'success',
+          duration: 1500
+        });
+      }
+    }
+  },
+
   // 详情
   details:function(event){
      var url = event.currentTarget.dataset.src;
